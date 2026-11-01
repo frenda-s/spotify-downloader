@@ -41,10 +41,19 @@ class ToolError(RuntimeError):
 
 
 def resolve_binary(name: str) -> str:
-    """Prefer the binary installed in the local .venv, otherwise use PATH."""
-    venv_binary = Path(__file__).resolve().parent / ".venv" / "bin" / name
-    if venv_binary.is_file():
-        return str(venv_binary)
+    """Prefer the binary installed in the local .venv, otherwise use PATH.
+
+    Handles POSIX layout (.venv/bin/<name>) and Windows (.venv/Scripts/<name>.exe).
+    """
+    root = Path(__file__).resolve().parent
+    candidates = (
+        root / ".venv" / "Scripts" / f"{name}.exe",
+        root / ".venv" / "Scripts" / name,
+        root / ".venv" / "bin" / name,
+    )
+    for path in candidates:
+        if path.is_file():
+            return str(path)
     found = shutil.which(name)
     if not found:
         raise ToolError(

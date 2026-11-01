@@ -20,8 +20,9 @@ A command-line tool that turns Spotify albums, playlists, tracks, or YouTube vid
 
 ## Prerequisites
 
-- **Python:** 3.9 or newer.
+- **Python:** 3.9 or newer (ensure "Add Python to PATH" is checked on Windows).
 - **FFmpeg:** Required for audio transcoding and metadata embedding.
+  - Windows: `winget install Gyan.FFmpeg` or `choco install ffmpeg`
   - Linux (Arch/CachyOS): `sudo pacman -S ffmpeg`
   - Linux (Debian/Ubuntu): `sudo apt install ffmpeg`
   - macOS: `brew install ffmpeg`
@@ -30,8 +31,9 @@ A command-line tool that turns Spotify albums, playlists, tracks, or YouTube vid
 
 ## Installation
 
-Clone the repository and install the dependencies in a virtual environment:
+Clone the repository and install dependencies:
 
+### Linux and macOS
 ```bash
 git clone https://github.com/frenda-s/spotify-downloader.git
 cd spotify-downloader
@@ -42,18 +44,25 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+### Windows
+```cmd
+git clone https://github.com/frenda-s/spotify-downloader.git
+cd spotify-downloader
+
+python -m venv .venv
+.venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
 ---
 
 ## Usage
 
 ### 1. Interactive Mode
 
-Run the shell script for an interactive terminal prompt:
-
-```bash
-chmod +x download.sh
-./download.sh
-```
+- **Windows:** Double-click `download.bat` or run `.\download.bat` in Command Prompt / PowerShell. It automatically bootstraps the virtual environment on first launch.
+- **Linux / macOS:** Run `chmod +x download.sh && ./download.sh`.
 
 You will be prompted for:
 1. Target URL (Spotify or YouTube link)
@@ -108,10 +117,12 @@ python3 spotify_downloader.py "https://open.spotify.com/track/4cOdK2wGLETKBW3Pvg
 
 ```
 spotify-downloader/
-├── download.sh            Interactive terminal wrapper
+├── download.sh            Interactive wrapper (Linux / macOS)
+├── download.bat           Interactive wrapper (Windows)
 ├── spotify_downloader.py  Core CLI routing and metadata engine
 ├── tests/test_smoke.py    Routing, command-shape and cover-extraction checks
 ├── tools/make_banner.py   Banner generation script
+├── .github/workflows/     Cross-platform CI (Linux, Windows, macOS)
 ├── requirements.txt       Python dependencies
 ├── assets/banner.png      Repository header banner
 └── README.md              Documentation
@@ -120,10 +131,14 @@ spotify-downloader/
 ## Tests
 
 ```bash
+# Linux / macOS
 .venv/bin/python tests/test_smoke.py
+
+# Windows
+.venv\Scripts\python tests\test_smoke.py
 ```
 
-The suite checks URL routing, the exact flag set handed to `spotdl` and `yt-dlp`, missing-binary handling, and cover extraction from an MP3 built on the fly with `ffmpeg`. It needs no network access.
+The suite checks URL routing, the exact flag set handed to `spotdl` and `yt-dlp`, missing-binary handling, and cover extraction from an MP3 built on the fly with `ffmpeg`. It needs no network access. CI runs the same suite on Ubuntu, Windows and macOS for Python 3.10 and 3.12.
 
 ---
 
