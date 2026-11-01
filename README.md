@@ -1,4 +1,4 @@
-> **Spotify and YouTube Downloader** — audio in, artwork and tags attached. [![CI](https://img.shields.io/badge/tests-7%20passing-1ed760)](tests/test_smoke.py)
+# Spotify and YouTube Downloader
 
 ![Banner](assets/banner.png)
 
