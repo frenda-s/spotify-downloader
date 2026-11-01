@@ -20,7 +20,7 @@ A command-line tool that turns Spotify albums, playlists, tracks, or YouTube vid
 
 ## Prerequisites
 
-- **Python:** 3.9 or newer (ensure "Add Python to PATH" is checked on Windows).
+- **Python:** 3.11 or newer (spotdl requires it; ensure "Add Python to PATH" is checked on Windows).
 - **FFmpeg:** Required for audio transcoding and metadata embedding.
   - Windows: `winget install Gyan.FFmpeg` or `choco install ffmpeg`
   - Linux (Arch/CachyOS): `sudo pacman -S ffmpeg`
